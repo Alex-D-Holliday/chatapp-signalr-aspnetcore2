@@ -8,8 +8,8 @@ namespace ChatApp.Database
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Chat> Chats { get; set; }
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<ChatEntity> Chats { get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

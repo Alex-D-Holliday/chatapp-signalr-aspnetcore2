@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace ChatApp.Controllers
 {
@@ -22,13 +24,13 @@ namespace ChatApp.Controllers
         public IActionResult Login() => View();
         [HttpPost]
 
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(String username, String password)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            User user = await _userManager.FindByNameAsync(username);
 
             if (user != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
+                SignInResult result = await _signInManager.PasswordSignInAsync(user, password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -43,14 +45,14 @@ namespace ChatApp.Controllers
         public IActionResult Register() => View();
         [HttpPost]
 
-        public async Task<IActionResult> Register(string username, string password)
+        public async Task<IActionResult> Register(String username, String password)
         {
-            var user = new User
+            User user = new User
             {
                 UserName = username
             };
 
-            var result = await _userManager.CreateAsync(user, password);
+            IdentityResult result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
             {

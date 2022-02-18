@@ -12,12 +12,12 @@ namespace ChatApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(String[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://localhost:3000")
                 .UseStartup<Startup>();

@@ -23,7 +23,7 @@ namespace ChatApp
         public Startup(IConfiguration config) => _config = config;
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = _config.GetConnectionString("DefaultConnection");
+            String connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddMvc();
 
             services.AddDbContext<AppDbContext>(options =>
@@ -40,7 +40,7 @@ namespace ChatApp
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IChatRepository, ChatRepository>();
+            services.AddTransient<IChatService, ChatService>();
 
             services.AddSignalR();
         }

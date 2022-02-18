@@ -8,15 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChatApp.Infrastructure.Respository
 {
-    public class ChatRepository : IChatRepository
+    public class ChatService : IChatService
     {
         private AppDbContext _ctx;
 
-        public ChatRepository(AppDbContext ctx) => _ctx = ctx;
+        public ChatService(AppDbContext ctx) => _ctx = ctx;
 
-        public async Task<Message> CreateMessage(int chatId, string message, string userId)
+        public async Task<MessageEntity> CreateMessage(Int32 chatId, String message, String userId)
         {
-            var Message = new Message
+            MessageEntity Message = new MessageEntity
             {
                 ChatId = chatId,
                 Text = message,
@@ -30,9 +30,9 @@ namespace ChatApp.Infrastructure.Respository
             return Message;
         }
 
-        public async Task<int> CreatePrivateRoom(string rootId, string targetId)
+        public async Task<Int32> CreatePrivateRoom(String rootId, String targetId)
         {
-            var chat = new Chat
+            ChatEntity chat = new ChatEntity
             {
                 Type = ChatType.Private
             };
@@ -54,9 +54,9 @@ namespace ChatApp.Infrastructure.Respository
             return chat.Id;
         }
 
-        public async Task CreateRoom(string name, string userId)
+        public async Task CreateRoom(String name, String userId)
         {
-            var chat = new Chat
+            ChatEntity chat = new ChatEntity
             {
                 Name = name,
                 Type = ChatType.Room
@@ -73,14 +73,14 @@ namespace ChatApp.Infrastructure.Respository
             await _ctx.SaveChangesAsync();
         }
 
-        public Chat GetChat(int id)
+        public ChatEntity GetChat(Int32 id)
         {
             return _ctx.Chats
                 .Include(x => x.Messages)
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Chat> GetChats(string userId)
+        public IEnumerable<ChatEntity> GetChats(String userId)
         {
             return _ctx.Chats
                 .Include(x => x.Users)
@@ -89,7 +89,7 @@ namespace ChatApp.Infrastructure.Respository
                 .ToList();
         }
 
-        public IEnumerable<Chat> GetPrivateChats(string userId)
+        public IEnumerable<ChatEntity> GetPrivateChats(String userId)
         {
             return _ctx.Chats
                    .Include(x => x.Users)
@@ -100,9 +100,9 @@ namespace ChatApp.Infrastructure.Respository
                    .ToList();
         }
 
-        public async Task JoinRoom(int chatId, string userId)
+        public async Task JoinRoom(Int32 chatId, String userId)
         {
-            var chatUser = new ChatUser
+            ChatUser chatUser = new ChatUser
             {
                 ChatId = chatId,
                 UserId = userId,

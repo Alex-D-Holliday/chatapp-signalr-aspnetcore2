@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using ChatApp.Database;
@@ -18,9 +20,9 @@ namespace ChatApp.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            String userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var chats = _ctx.ChatUsers
+            List<ChatEntity> chats = _ctx.ChatUsers
                 .Include(x => x.Chat)
                 .Where(x => x.UserId == userId
                     && x.Chat.Type == ChatType.Room)
